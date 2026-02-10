@@ -8,21 +8,24 @@ import Settings from "./pages/Settings";
 import Dashboard from "./pages/Dashboard";
 import PageNotFound from "./pages/PageNotFound";
 import GlobalStyles from "./styles/GlobalStyle";
+import AppLayout from "./ui/AppLayout";
 function App() {
   return (
     <>
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route index element={<Navigate replace to={<Dashboard />} />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/users" element={<Users />} />
+          <Route element={<AppLayout />}>
+            <Route index element={<Navigate replace to="dashboard" />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/cabins" element={<Cabins />} />
+            <Route path="/bookings" element={<Bookings />} />
+            {/* <Route path="/checkin/:BookId" element={<Cabins />} /> */}
+            <Route path="/setting" element={<Settings />} />
+          </Route>
           <Route path="/login" element={<Login />} />
-          <Route path="/cabins" element={<Cabins />} />
-          <Route path="/bookings" element={<Bookings />} />
-          {/* <Route path="/checkin/:BookId" element={<Cabins />} /> */}
-          <Route path="/setting" element={<Settings />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
