@@ -42,7 +42,7 @@ function App() {
       </BrowserRouter>
       <Toaster
         position="top-right"
-        gutter={8}
+        gutter={10}
         containerStyle={{ margin: "8px" }}
         toastOptions={{
           success: {
@@ -53,10 +53,10 @@ function App() {
           },
           style: {
             fontSize: "16px",
-            maxWidth: "500px",
             padding: "16px 24px",
+            maxWidth: "500px",
             backgroundColor: "var(--color-grey-0)",
-            color: "var(--color-grey-700)",
+            color: "var(--color-grey-7000)",
           },
         }}
       />
