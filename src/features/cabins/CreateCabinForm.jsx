@@ -47,38 +47,40 @@ const Error = styled.span`
 `;
 
 function CreateCabinForm() {
+  const queryClient = useQueryClient();
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
-  console.log(errors);
-  function onSubmite(data) {
-    // console.log(data);
-    mutate(data);
-  }
-  const queryClient = useQueryClient();
-  const { isLoading, mutate } = useMutation({
+  const { isLoading: isCreating, mutate } = useMutation({
     mutationFn: createCabins,
     onSuccess: () => {
-      (toast.success("Cabin successfuly Created!"),
-        queryClient.invalidateQueries({
-          queryKey: ["cabin"],
-        }),
+      ((toast.success("Cabin created successfully"),
+      queryClient.invalidateQueries({
+        queryKey: ["cabin"],
+      })),
         reset());
     },
     onError: (err) => toast.error(err.message),
   });
-  function onError(error) {
-    console.log(error);
+
+  function onSubmite(data) {
+    mutate({ ...data, image: data.image[0] });
+    // console.log(data.image[0]);
   }
+  // function onError(error) {
+  //   // console.log(error);
+  // }
+
   return (
-    <Form onSubmit={handleSubmit(onSubmite, onError)}>
+    <Form onSubmit={handleSubmit(onSubmite)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input
           type="text"
           id="name"
           {...register("name", {
-            required: "This field is required",
+            required: "This field is Required",
           })}
+          disabled={isCreating}
         />
         {errors?.name?.message && <Error>{errors.name.message}</Error>}
       </FormRow>
@@ -89,12 +91,13 @@ function CreateCabinForm() {
           type="number"
           id="maxCapacity"
           {...register("maxCapacity", {
-            required: "This field is required",
+            required: "This field is Required",
             min: {
               value: 1,
-              message: "MaxCapacity should be atleast 1",
+              message: "This field required number greater than 1",
             },
           })}
+          disabled={isCreating}
         />
         {errors?.maxCapacity?.message && (
           <Error>{errors.maxCapacity.message}</Error>
@@ -107,12 +110,9 @@ function CreateCabinForm() {
           type="number"
           id="regularPrice"
           {...register("regularPrice", {
-            required: "This field is required",
-            min: {
-              value: 1,
-              message: "MaxCapacity should be atleast 1",
-            },
+            required: "This field is Required",
           })}
+          disabled={isCreating}
         />
         {errors?.regularPrice?.message && (
           <Error>{errors.regularPrice.message}</Error>
@@ -126,11 +126,12 @@ function CreateCabinForm() {
           id="discount"
           defaultValue={0}
           {...register("discount", {
-            required: "This field is required",
+            required: "This field is Required",
             validate: (value) =>
-              value < getValues().regularPrice ||
-              "Discount can't be greater than the actual price",
+              value <= getValues().regularPrice ||
+              "Discount can't be more than the regularPrice",
           })}
+          disabled={isCreating}
         />
         {errors?.discount?.message && <Error>{errors.discount.message}</Error>}
       </FormRow>
@@ -142,16 +143,25 @@ function CreateCabinForm() {
           id="description"
           defaultValue=""
           {...register("description", {
-            required: "This field is required",
+            required: "This field is Required",
           })}
+          disabled={isCreating}
         />
+
         {errors?.description?.message && (
           <Error>{errors.description.message}</Error>
         )}
       </FormRow>
+
       <FormRow>
         <Label htmlFor="image">Cabin photo</Label>
-        <FileInput id="image" accept="image/*" />
+        <FileInput
+          id="image"
+          accept="image/*"
+          {...register("image", {
+            required: "This field is required",
+          })}
+        />
       </FormRow>
 
       <FormRow>
@@ -159,7 +169,7 @@ function CreateCabinForm() {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button disabled={isLoading}>Add cabin</Button>
+        <Button disabled={isCreating}>Add cabin</Button>
       </FormRow>
     </Form>
   );
