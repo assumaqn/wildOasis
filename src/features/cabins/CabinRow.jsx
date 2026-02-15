@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import PropTypes from "prop-types";
-import { deleteCabin } from "../../services/ApiCabin";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
+import { useDeleteCabin } from "./useDeleteCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -49,26 +48,8 @@ const Discount = styled.div`
 function CabinRow({ cabin }) {
   const [show, setShow] = useState(false);
   const { id, image, maxCapacity, name, regularPrice, discount } = cabin;
-  CabinRow.propTypes = {
-    cabin: PropTypes.object.isRequired,
-    image: PropTypes.string.isRequired,
-    maxCapacity: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    regularPrice: PropTypes.number.isRequired,
-    discount: PropTypes.number.isRequired,
-  };
-  const queryClient = useQueryClient();
-  const { isLoading: isDeleting, mutate } = useMutation({
-    mutationFn: (id) => deleteCabin(id),
-    onSuccess: () => {
-      (toast.success("Cabin successfuly Deleted!"),
-        queryClient.invalidateQueries({
-          queryKey: ["cabin"],
-        }));
-    },
-    onError: (err) => toast.error(err.message),
-  });
 
+  const { isDeleting, deleteCabin } = useDeleteCabin();
   return (
     <>
       <TableRow role="row">
@@ -76,10 +57,14 @@ function CabinRow({ cabin }) {
         <Cabin>{name}</Cabin>
         <div>Fits up to {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <div>
           <button onClick={() => setShow((cur) => !cur)}>Edit</button>
-          <button onClick={() => mutate(id)} disabled={isDeleting}>
+          <button onClick={() => deleteCabin(id)} disabled={isDeleting}>
             Delete
           </button>
         </div>
@@ -88,5 +73,13 @@ function CabinRow({ cabin }) {
     </>
   );
 }
+CabinRow.propTypes = {
+  cabin: PropTypes.object.isRequired,
+  image: PropTypes.string.isRequired,
+  maxCapacity: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  regularPrice: PropTypes.number.isRequired,
+  discount: PropTypes.number.isRequired,
+};
 
 export default CabinRow;
