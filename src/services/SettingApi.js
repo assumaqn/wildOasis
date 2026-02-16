@@ -15,7 +15,7 @@ export async function updatingSetting(newSetting) {
   const { data, error } = await supabase
     .from("setting")
     .update(newSetting)
-    .eq("some_column", "someValue")
+    .eq("id", 1)
     .select();
 
   if (error) {
