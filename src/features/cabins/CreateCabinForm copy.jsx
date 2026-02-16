@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import Input from "../../ui/Input";
@@ -6,46 +7,45 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
-import FormRow from "../../ui/FormRow";
 
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
-// const FormRow = styled.div`
-//   display: grid;
-//   align-items: center;
-//   grid-template-columns: 24rem 1fr 1.2fr;
-//   gap: 2.4rem;
+const FormRow = styled.div`
+  display: grid;
+  align-items: center;
+  grid-template-columns: 24rem 1fr 1.2fr;
+  gap: 2.4rem;
 
-//   padding: 1.2rem 0;
+  padding: 1.2rem 0;
 
-//   &:first-child {
-//     padding-top: 0;
-//   }
+  &:first-child {
+    padding-top: 0;
+  }
 
-//   &:last-child {
-//     padding-bottom: 0;
-//   }
+  &:last-child {
+    padding-bottom: 0;
+  }
 
-//   &:not(:last-child) {
-//     border-bottom: 1px solid var(--color-grey-100);
-//   }
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--color-grey-100);
+  }
 
-//   &:has(button) {
-//     display: flex;
-//     justify-content: flex-end;
-//     gap: 1.2rem;
-//   }
-// `;
+  &:has(button) {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.2rem;
+  }
+`;
 
-// const Label = styled.label`
-//   font-weight: 500;
-// `;
+const Label = styled.label`
+  font-weight: 500;
+`;
 
-// const Error = styled.span`
-//   font-size: 1.4rem;
-//   color: var(--color-red-700);
-// `;
+const Error = styled.span`
+  font-size: 1.4rem;
+  color: var(--color-red-700);
+`;
 
 function CreateCabinForm({ cabinToEdit = {} }) {
   const { id: editId, ...editValues } = cabinToEdit;
@@ -86,7 +86,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
   return (
     <Form onSubmit={handleSubmit(onSubmite)}>
-      {/* <FormRow>
+      <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input
           type="text"
@@ -97,19 +97,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           disabled={isWorking}
         />
         {errors?.name?.message && <Error>{errors.name.message}</Error>}
-      </FormRow> */}
-      <FormRow label="Cabin name" errors={errors?.name?.message}>
-        <Input
-          type="text"
-          id="name"
-          {...register("name", {
-            required: "This field is Required",
-          })}
-          disabled={isWorking}
-        />
       </FormRow>
 
-      <FormRow label="Maximum capacity" errors={errors?.maxCapacity?.message}>
+      <FormRow>
+        <Label htmlFor="maxCapacity">Maximum capacity</Label>
         <Input
           type="number"
           id="maxCapacity"
@@ -122,9 +113,13 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           })}
           disabled={isWorking}
         />
+        {errors?.maxCapacity?.message && (
+          <Error>{errors.maxCapacity.message}</Error>
+        )}
       </FormRow>
 
-      <FormRow label="Regular price" errors={errors?.regularPrice?.message}>
+      <FormRow>
+        <Label htmlFor="regularPrice">Regular price</Label>
         <Input
           type="number"
           id="regularPrice"
@@ -133,9 +128,13 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           })}
           disabled={isWorking}
         />
+        {errors?.regularPrice?.message && (
+          <Error>{errors.regularPrice.message}</Error>
+        )}
       </FormRow>
 
-      <FormRow label="Discount" errors={errors?.discount?.message}>
+      <FormRow>
+        <Label htmlFor="discount">Discount</Label>
         <Input
           type="number"
           id="discount"
@@ -148,12 +147,11 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           })}
           disabled={isWorking}
         />
+        {errors?.discount?.message && <Error>{errors.discount.message}</Error>}
       </FormRow>
 
-      <FormRow
-        label="Description for website"
-        errors={errors?.description?.message}
-      >
+      <FormRow>
+        <Label htmlFor="description">Description for website</Label>
         <Textarea
           type="number"
           id="description"
@@ -163,9 +161,14 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           })}
           disabled={isWorking}
         />
+
+        {errors?.description?.message && (
+          <Error>{errors.description.message}</Error>
+        )}
       </FormRow>
 
-      <FormRow label="Cabin photo">
+      <FormRow>
+        <Label htmlFor="image">Cabin photo</Label>
         <FileInput
           id="image"
           accept="image/*"
