@@ -20,6 +20,7 @@ function UpdateSettingsForm() {
   if (isLoading) <Spinner />;
   function handleBlure(e, field) {
     const { value } = e.target;
+    if (!value) return;
     updateSetting({ [field]: value });
   }
   return (

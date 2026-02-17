@@ -47,7 +47,7 @@ import { useEditCabin } from "./useEditCabin";
 //   color: var(--color-red-700);
 // `;
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onClose }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditing = Boolean(editId);
 
@@ -70,6 +70,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         {
           onSuccess: () => {
             reset();
+            onClose?.();
           },
         },
       );
@@ -79,25 +80,17 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         {
           onSuccess: () => {
             reset();
+            onClose?.();
           },
         },
       );
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmite)}>
-      {/* <FormRow>
-        <Label htmlFor="name">Cabin name</Label>
-        <Input
-          type="text"
-          id="name"
-          {...register("name", {
-            required: "This field is Required",
-          })}
-          disabled={isWorking}
-        />
-        {errors?.name?.message && <Error>{errors.name.message}</Error>}
-      </FormRow> */}
+    <Form
+      onSubmit={handleSubmit(onSubmite)}
+      type={onClose ? "modal" : "regular"}
+    >
       <FormRow label="Cabin name" errors={errors?.name?.message}>
         <Input
           type="text"
@@ -177,7 +170,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" onClick={() => onClose?.()}>
           Cancel
         </Button>
         <Button disabled={isWorking}>
@@ -189,6 +182,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 }
 CreateCabinForm.propTypes = {
   cabinToEdit: PropTypes.object,
+  onClose: PropTypes.bool,
 };
 
 export default CreateCabinForm;

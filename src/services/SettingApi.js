@@ -12,6 +12,7 @@ export async function FetchSetting() {
 }
 
 export async function updatingSetting(newSetting) {
+  if (!newSetting) return;
   const { data, error } = await supabase
     .from("setting")
     .update(newSetting)
