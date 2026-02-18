@@ -2,14 +2,8 @@ import PropTypes from "prop-types";
 import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import {
-  cloneElement,
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { cloneElement, createContext, useContext, useState } from "react";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -80,16 +74,17 @@ function Open({ children, opens }) {
 
 function Window({ children, name }) {
   const { close, openName } = useContext(ModalContext);
-  const ref = useRef();
-  useEffect(() => {
-    function handleClick(e) {
-      if (ref.current && !ref.current.contains(e.target)) {
-        close();
-      }
-    }
-    document.addEventListener("click", handleClick, true);
-    return () => document.removeEventListener("click", handleClick, true);
-  }, [close]);
+  // const ref = useRef();
+  // useEffect(() => {
+  //   function handleClick(e) {
+  //     if (ref.current && !ref.current.contains(e.target)) {
+  //       close();
+  //     }
+  //   }
+  //   document.addEventListener("click", handleClick, true);
+  //   return () => document.removeEventListener("click", handleClick, true);
+  // }, [close]);
+  const { ref } = useClickOutside(close);
   if (name !== openName) return null;
 
   return createPortal(
