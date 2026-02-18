@@ -60,7 +60,6 @@ function CabinRow({ cabin }) {
       name: `Copy of ${name}`,
       image,
       maxCapacity,
-
       regularPrice,
       discount,
       description,
@@ -95,12 +94,12 @@ function CabinRow({ cabin }) {
   );
 }
 CabinRow.propTypes = {
-  cabin: PropTypes.object.isRequired,
-  image: PropTypes.string.isRequired,
-  maxCapacity: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  regularPrice: PropTypes.number.isRequired,
-  discount: PropTypes.number.isRequired,
+  cabin: PropTypes.object,
+  image: PropTypes.string,
+  maxCapacity: PropTypes.number,
+  name: PropTypes.string,
+  regularPrice: PropTypes.number,
+  discount: PropTypes.number,
 };
 
 export default CabinRow;
