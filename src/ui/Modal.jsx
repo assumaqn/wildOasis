@@ -74,16 +74,7 @@ function Open({ children, opens }) {
 
 function Window({ children, name }) {
   const { close, openName } = useContext(ModalContext);
-  // const ref = useRef();
-  // useEffect(() => {
-  //   function handleClick(e) {
-  //     if (ref.current && !ref.current.contains(e.target)) {
-  //       close();
-  //     }
-  //   }
-  //   document.addEventListener("click", handleClick, true);
-  //   return () => document.removeEventListener("click", handleClick, true);
-  // }, [close]);
+
   const { ref } = useClickOutside(close);
   if (name !== openName) return null;
 
