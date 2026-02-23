@@ -9,6 +9,7 @@ import { useCreateCabin } from "./useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 
 const Img = styled.img`
   display: block;
@@ -38,10 +39,17 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const { id, image, maxCapacity, name, regularPrice, discount, description } =
-    cabin;
+  const {
+    id: cabinId,
+    image,
+    maxCapacity,
+    name,
+    regularPrice,
+    discount,
+    description,
+  } = cabin;
 
-  const { isDeleting, deleteCabin } = useDeleteCabin();
+  const { isDeleting, deleteCabin } = useDeleteCabin(false);
   const { isCreating, createCabin } = useCreateCabin();
 
   function handleCopyCabin() {
@@ -86,11 +94,19 @@ function CabinRow({ cabin }) {
           <Modal.Window name="delete">
             <ConfirmDelete
               resourceName="Cabin"
-              onConfirm={() => deleteCabin(id)}
+              onConfirm={() => deleteCabin(cabinId)}
               disabled={isDeleting}
             />
           </Modal.Window>
         </Modal>
+        <Menus.Menu>
+          <Menus.Toggle id={cabinId} />
+          <Menus.List id={cabinId}>
+            <Menus.Button icon={<HiSquare2Stack />}>Duplicate</Menus.Button>
+            <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+            <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+          </Menus.List>
+        </Menus.Menu>
       </div>
     </Table.Row>
   );
