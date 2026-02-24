@@ -109,10 +109,15 @@ function List({ id, children }) {
     document.body,
   );
 }
-function Button({ children, icon }) {
+function Button({ children, icon, onClick }) {
+  const { close } = useContext(MenuContext);
+  function handleClick() {
+    onClick?.();
+    close();
+  }
   return (
     <li>
-      <StyledButton>
+      <StyledButton onClick={handleClick}>
         {icon}
         <span>{children}</span>
       </StyledButton>
@@ -133,6 +138,7 @@ List.propTypes = {
 Button.propTypes = {
   children: PropTypes.node,
   icon: PropTypes.node,
+  onClick: PropTypes.func,
 };
 
 Menus.Menu = Menu;
