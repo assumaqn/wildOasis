@@ -85,7 +85,8 @@ function Row({ children }) {
   );
 }
 function Body({ data, render }) {
-  if (!data) return <Empty>There is data to show at the moment!</Empty>;
+  if (data.length === 0)
+    return <Empty>There is data to show at the moment!</Empty>;
   return <StyledBody>{data.map(render)}</StyledBody>;
 }
 
