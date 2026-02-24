@@ -4,6 +4,7 @@ import { useCabinApi } from "./useCabinApi";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
 
 function CabinTable() {
   const { isLoading, cabins } = useCabinApi();
@@ -18,6 +19,7 @@ function CabinTable() {
   if (filterValue === "with-discount")
     filterCabin = cabins.filter((cabin) => cabin.discount > 0);
 
+  if (filterCabin.length == 0) return <Empty resource="Cabin" />;
   return (
     <Menus>
       <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
