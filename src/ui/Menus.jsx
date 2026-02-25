@@ -5,7 +5,6 @@ import { HiEllipsisVertical } from "react-icons/hi2";
 import { createPortal } from "react-dom";
 import { useClickOutside } from "../hooks/useClickOutside";
 const Menu = styled.div`
-  display: flex;
   align-items: center;
   justify-content: flex-end;
 `;
