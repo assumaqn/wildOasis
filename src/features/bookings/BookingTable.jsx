@@ -12,8 +12,8 @@ function BookingTable() {
   const { bookings, isLoading } = useBookings();
   console.log(bookings);
 
-  if (!bookings?.length) return <Empty resource="Booking" />;
   if (isLoading) return <Spinner />;
+  if (!bookings?.length) return <Empty resource="Booking" />;
 
   return (
     <Menus>
