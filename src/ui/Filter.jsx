@@ -48,7 +48,7 @@ function Filter({ field, options }) {
         <FilterButton
           onClick={() => handleClick(option.value)}
           key={option.name}
-          active={searchParams.get("discount") == option.value}
+          active={searchParams.get(field) == option.value}
         >
           {option.name}
         </FilterButton>
