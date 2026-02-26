@@ -42,16 +42,16 @@ const StyledRow = styled(CommonRow)`
   }
 `;
 
-// const Footer = styled.footer`
-//   background-color: var(--color-grey-50);
-//   display: flex;
-//   justify-content: center;
-//   padding: 1.2rem;
+const Footer = styled.footer`
+  background-color: var(--color-grey-50);
+  display: flex;
+  justify-content: center;
+  padding: 1.2rem;
 
-//   &:not(:has(*)) {
-//     display: none;
-//   }
-// `;
+  &:not(:has(*)) {
+    display: none;
+  }
+`;
 
 const Empty = styled.p`
   font-size: 1.6rem;
@@ -93,6 +93,7 @@ function Body({ data, render }) {
 Table.Header = Header;
 Table.Row = Row;
 Table.Body = Body;
+Table.Footer = Footer;
 Table.propTypes = {
   children: PropType.node,
   columns: PropType.string,
