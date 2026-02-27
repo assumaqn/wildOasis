@@ -29,15 +29,27 @@ export async function getBooking(id) {
   const { data, error } = await supabase
     .from("bookings")
     .select("*, cabins(*), guests(*)")
-    .eq("id", 13)
+    .eq("id", id)
     .single();
-
-  console.log(id, data);
 
   if (error) {
     console.error(error);
     throw new Error("Booking not found");
   }
 
+  return data;
+}
+export async function updateBooking(id, obj) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .update(obj)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be updated");
+  }
   return data;
 }
