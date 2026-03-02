@@ -36,12 +36,12 @@ const Error = styled.span`
 
 import PropTypes from "prop-types";
 
-function FormRow({ label, children, errors }) {
+function FormRow({ label, children, error }) {
   return (
     <StyledFormRow>
       {label && <Label htmlFor={children?.props.id}>{label}</Label>}
       {children}
-      {errors && <Error>{errors}</Error>}
+      {error && <Error>{error}</Error>}
     </StyledFormRow>
   );
 }
@@ -49,7 +49,7 @@ function FormRow({ label, children, errors }) {
 FormRow.propTypes = {
   label: PropTypes.node,
   children: PropTypes.node,
-  errors: PropTypes.node,
+  error: PropTypes.node,
 };
 
 export default FormRow;
