@@ -3,14 +3,25 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
+import SpinnerMini from "../../ui/SpinnerMini";
+
+import { useSignUp } from "./useSignUp";
 
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
-  const { register, formState, handleSubmit, getValues } = useForm();
+  const { register, formState, handleSubmit, getValues, reset } = useForm();
   const { errors } = formState;
+  const { signUp, isLoading } = useSignUp();
   function onSubmit(data) {
-    console.log(data);
+    if (!data) return;
+    signUp(data, {
+      onSettled: () => {
+        reset();
+      },
+    });
+
+    // console.log(data);
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -21,6 +32,7 @@ function SignupForm() {
           {...register("fullName", {
             required: "This field is required",
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
@@ -35,6 +47,7 @@ function SignupForm() {
               message: "Please provide the approprate email address",
             },
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
@@ -52,6 +65,7 @@ function SignupForm() {
               message: "password length should be at least 8 characters",
             },
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
@@ -64,15 +78,18 @@ function SignupForm() {
             validate: (value) =>
               value === getValues().password || "Passwords need to match",
           })}
+          disabled={isLoading}
         />
       </FormRow>
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" disabled={isLoading}>
           Cancel
         </Button>
-        <Button>Create new user</Button>
+        <Button disabled={isLoading}>
+          {!isLoading ? "Create new user" : <SpinnerMini />}
+        </Button>
       </FormRow>
     </Form>
   );
