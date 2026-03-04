@@ -85,7 +85,6 @@ export async function getBookingsAfterDate(date) {
 export async function getStaysAfterDate(date) {
   const { data, error } = await supabase
     .from("bookings")
-    // .select('*')
     .select("*, guests(fullName)")
     .gte("startDate", date)
     .lte("startDate", getToday());
@@ -94,6 +93,8 @@ export async function getStaysAfterDate(date) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
+  // console.log(data);
 
   return data;
 }
+// getStaysAfterDate("2026-02-25T16:43:41.216Z");
