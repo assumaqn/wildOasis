@@ -55,7 +55,6 @@ export async function updateBooking(id, obj) {
   return data;
 }
 export async function deleteBooking(id) {
-  // REMEMBER RLS POLICIES
   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
   if (error) {
@@ -107,7 +106,6 @@ export async function getStaysTodayActivity() {
     )
     .order("created_at");
 
-  console.log(data);
   if (error) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
