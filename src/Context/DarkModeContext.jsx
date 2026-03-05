@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 const DarkModeContext = createContext();
 
 function DarkModeProvider({ children }) {
-  const [isDark, setIsDark] = useLocalStorageState(false, "isDark");
+  const [isDark, setIsDark] = useLocalStorageState(
+    window.matchMedia("(prefer-color.scheme:dark)").matches,
+    "isDark",
+  );
   function toggleDark() {
     setIsDark((isDark) => !isDark);
   }
