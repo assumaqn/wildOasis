@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useRecentBooking } from "./useRecentBooking";
 import Spinner from "../../ui/Spinner";
-
 import Stats from "./Stats";
+import TodayActivity from "../check-in-out/TodayActivity";
 import { useCabinApi } from "../cabins/useCabinApi";
 import { useRecentStay } from "./useRecentStay";
 import SalesChart from "./SalesChart";
@@ -20,7 +20,7 @@ function DashboardLayout() {
   const { booking, isLoading, numDays } = useRecentBooking();
   const { isLoading: isLoading2, confirmStays } = useRecentStay();
   const { cabins, isLoading: isLoading3 } = useCabinApi();
-  // console.log(booking, "confrim:", stays);
+
   if (isLoading || isLoading3 || isLoading2) return <Spinner />;
 
   return (
@@ -31,8 +31,7 @@ function DashboardLayout() {
         numDays={numDays}
         cabinCount={cabins.length}
       />
-
-      <div>Today activity</div>
+      <TodayActivity />
       <DurationChart confirmStay={confirmStays} />
       <SalesChart bookings={booking} numDays={numDays} />
     </StyledDashboardLayout>
