@@ -1,8 +1,8 @@
-# 🌴 The Wild Oasis
+#The Wild Oasis
 
 **The Wild Oasis** is a modern hotel management web application designed to help hotel staff manage cabins, bookings, and guests efficiently. The application provides a clean dashboard with analytics and tools to monitor hotel operations in real time.
 
-## 🚀 Features
+##Features
 
 * Manage **cabins** (create, edit, delete, update prices and details)
 * Manage **guest bookings**
@@ -12,7 +12,7 @@
 * **Authentication system** for staff members
 * Responsive and modern UI
 
-## 🧑‍💻 Tech Stack
+##Tech Stack
 
 * **React**
 * **React Query (TanStack Query)** – Server state management
@@ -22,7 +22,7 @@
 * **Supabase** – Backend and database
 * **Date-fns** – Date utilities
 
-## 📊 Dashboard
+##Dashboard
 
 The dashboard provides insights such as:
 
@@ -33,17 +33,6 @@ The dashboard provides insights such as:
 
 These analytics help managers understand hotel performance and make better operational decisions.
 
-## 🧠 What I Learned
-
-While building this project, I practiced and improved my skills in:
-
-* Advanced **React component architecture**
-* **Custom hooks**
-* **Server state management with React Query**
-* **Data visualization**
-* **Authentication and protected routes**
-* Building a **real-world application workflow**
-
 ## 📷 Screenshots
 
 *Add screenshots of your dashboard, bookings page, and cabins page here.*
@@ -53,7 +42,7 @@ While building this project, I practiced and improved my skills in:
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/the-wild-oasis.git
+git clone https://github.com/assumaqn/wildOasis.git
 ```
 
 Install dependencies:
